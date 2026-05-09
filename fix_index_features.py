@@ -1,35 +1,10 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reservas Granada | Restaurantes en Granada, Nicaragua</title>
-    <meta name="description" content="Reserva tu mesa en los mejores restaurantes de Granada, Nicaragua. Encuentra opciones por zona, tipo de comida y más.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-    <!-- HEADER -->
-    <header id="main-header">
-        <nav class="navbar">
-            <a href="index.html" class="logo">
-                <i class="fa-solid fa-bell-concierge"></i> Reservas<span>Granada</span>
-            </a>
-            <ul class="nav-links">
-                <li><a href="index.html" class="active">Inicio</a></li>
-                <li><a href="restaurantes.html">Restaurantes</a></li>
-                <li><a href="mis-reservas.html">Mis Reservas</a></li>
-                <li><a href="admin.html">Admin</a></li>
-            </ul>
-        </nav>
-    </header>
+import re
 
-    <!-- HERO SECTION -->
-    <section class="hero" id="inicio">
-        <div class="hero-overlay"></div>
+with open("index.html", "r") as f:
+    content = f.read()
 
+# Insert Quick Search Widget into Hero
+hero_search_html = """
         <div class="hero-content" style="max-width: 1000px;">
             <h1>Reserva tu mesa en los mejores restaurantes de <span>Granada, Nicaragua</span></h1>
             <p>Descubre la gastronomía local e internacional en la joya colonial. Confirmación rápida y sin llamadas innecesarias.</p>
@@ -59,10 +34,12 @@
                 </form>
             </div>
         </div>
+"""
 
-    </section>
+content = re.sub(r'<div class="hero-content">.*?</div>', hero_search_html, content, flags=re.DOTALL)
 
-
+# Insert Featured Restaurants Section before "Cómo funciona"
+featured_html = """
     <!-- MAIN CONTENT -->
     <main class="container">
 
@@ -74,80 +51,15 @@
         <section class="restaurants-grid" id="featuredContainer" style="margin-bottom: 5rem;">
             <!-- JS -->
         </section>
+"""
 
-        <!-- HOW IT WORKS -->
-        <section class="section-title">
-            <h2>¿Cómo funciona?</h2>
-            <p>Tu mesa lista en tres simples pasos</p>
-        </section>
+content = content.replace("    <!-- MAIN CONTENT -->\n    <main class=\"container\">", featured_html)
 
-        <section class="benefits-grid">
-            <div class="benefit-card">
-                <i class="fa-solid fa-magnifying-glass-location"></i>
-                <h3>1. Elige restaurante</h3>
-                <p>Explora nuestras opciones por tipo de comida, precio o ubicación.</p>
-            </div>
-            <div class="benefit-card">
-                <i class="fa-regular fa-calendar-check"></i>
-                <h3>2. Selecciona fecha y hora</h3>
-                <p>Verifica la disponibilidad en tiempo real y elige tu momento ideal.</p>
-            </div>
-            <div class="benefit-card">
-                <i class="fa-solid fa-check-double"></i>
-                <h3>3. Confirma tu reserva</h3>
-                <p>Recibe tu código de confirmación al instante. ¡Sin complicaciones!</p>
-            </div>
-        </section>
+with open("index.html", "w") as f:
+    f.write(content)
 
-        <!-- BENEFITS -->
-        <section class="section-title" style="margin-top: 5rem;">
-            <h2>Por qué reservar con nosotros</h2>
-        </section>
-        <section class="benefits-grid">
-            <div class="benefit-card">
-                <i class="fa-solid fa-bolt"></i>
-                <h3>Reserva fácil</h3>
-                <p>Proceso intuitivo desde cualquier dispositivo.</p>
-            </div>
-            <div class="benefit-card">
-                <i class="fa-solid fa-shield-halved"></i>
-                <h3>Restaurantes verificados</h3>
-                <p>Solo los mejores establecimientos de Granada.</p>
-            </div>
-            <div class="benefit-card">
-                <i class="fa-solid fa-phone-slash"></i>
-                <h3>Sin llamadas</h3>
-                <p>Olvídate de esperar en la línea telefónica.</p>
-            </div>
-        </section>
-
-        <div style="text-align: center; margin-top: 3rem;">
-            <a href="restaurantes.html" class="btn-primary">Ver todos los restaurantes</a>
-        </div>
-    </main>
-
-    <footer>
-        <div class="container" style="padding: 0;">
-            <h3>ReservasGranada</h3>
-            <p>&copy; 2024 Reservas Granada, Nicaragua. Todos los derechos reservados.</p>
-        </div>
-    </footer>
-
-    <script src="js/data.js"></script>
-    <script>
-        // Header scroll effect
-        const header = document.getElementById('main-header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-    </script>
-</body>
-</html>
-
+with open("index.html", "a") as f:
+    f.write("""
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const rests = getRestaurants().filter(r => r.isActive).sort((a,b) => b.rating - a.rating).slice(0, 3);
@@ -178,3 +90,4 @@
             }
         });
     </script>
+""")

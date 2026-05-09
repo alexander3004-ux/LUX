@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurantes | Reservas Granada</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body { padding-top: 80px; }
+        header { background: var(--bg-panel); box-shadow: var(--shadow-light); }
+        .logo, .nav-links a { color: var(--text-main); }
+        .logo i { color: var(--primary-color); }
+        .page-header { background: var(--secondary-color); color: white; padding: 4rem 2rem; text-align: center; margin-bottom: 3rem;}
+        .page-header h1 { font-size: 2.5rem; margin-bottom: 1rem; color: var(--bg-light); }
+    </style>
+</head>
+<body>
+    <header id="main-header" class="scrolled">
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <i class="fa-solid fa-bell-concierge"></i> Reservas<span>Granada</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="restaurantes.html" class="active">Restaurantes</a></li>
+                <li><a href="mis-reservas.html">Mis Reservas</a></li>
+                <li><a href="admin.html">Admin</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="page-header">
+        <h1>Explora Restaurantes en Granada</h1>
+        <p>Encuentra el lugar perfecto para tu próxima comida</p>
+    </div>
+
+    <main class="container" style="padding-top: 0;">
+        <!-- FILTERS -->
+        <section class="filters" id="filters">
+            <div class="search-bar">
+                <i class="fa-solid fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Buscar por nombre o descripción...">
+            </div>
+            <div class="filter-options">
+                <select id="cuisineFilter">
+                    <option value="all">Tipo de Comida (Todos)</option>
+                    <option value="Nicaragüense">Nicaragüense</option>
+                    <option value="Internacional">Internacional</option>
+                    <option value="Mariscos">Mariscos</option>
+                    <option value="Parrilla">Parrilla</option>
+                    <option value="Café">Café</option>
+                </select>
+                <select id="priceFilter">
+                    <option value="all">Precio (Todos)</option>
+                    <option value="Económico">Económico</option>
+                    <option value="Medio">Medio</option>
+                    <option value="Premium">Premium</option>
+                </select>
+                <select id="zoneFilter">
+                    <option value="all">Zona (Todas)</option>
+                    <option value="Centro histórico">Centro histórico</option>
+                    <option value="Calle La Calzada">Calle La Calzada</option>
+                    <option value="Cerca del Parque Central">Cerca del Parque Central</option>
+                    <option value="Malecón">Malecón</option>
+                    <option value="Isletas">Isletas</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- RESTAURANTS GRID -->
+        <section class="restaurants-grid" id="restaurantsContainer">
+            <!-- Rendered by JS -->
+        </section>
+    </main>
+
+    <footer>
+        <div class="container" style="padding: 0;">
+            <h3>ReservasGranada</h3>
+            <p>&copy; 2024 Reservas Granada, Nicaragua. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script>
+        const restaurantsContainer = document.getElementById('restaurantsContainer');
+        const searchInput = document.getElementById('searchInput');
+        const cuisineFilter = document.getElementById('cuisineFilter');
+        const priceFilter = document.getElementById('priceFilter');
+        const zoneFilter = document.getElementById('zoneFilter');
+
+        function renderRestaurants(data) {
+            restaurantsContainer.innerHTML = '';
+
+            if (data.length === 0) {
+                restaurantsContainer.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--text-muted);">
+                        <i class="fa-solid fa-utensils fa-3x" style="margin-bottom: 1rem; color: var(--border-color);"></i>
+                        <h3>No se encontraron restaurantes</h3>
+                        <p>Intenta ajustar tus filtros de búsqueda.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            data.forEach(r => {
+                if(!r.isActive) return;
+                const card = document.createElement('article');
+                card.className = 'restaurant-card';
+                card.innerHTML = `
+                    <div class="card-img-container">
+                        <img src="${r.images[0]}" alt="${r.name}" loading="lazy">
+                        <div class="card-badges">
+                            <span class="badge">${r.cuisineType}</span>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3>${r.name}</h3>
+                        <div class="card-info-meta">
+                            <span><i class="fa-solid fa-location-dot"></i> ${r.zone}</span>
+                            <span><i class="fa-solid fa-star"></i> ${r.rating}</span>
+                            <span><i class="fa-solid fa-money-bill"></i> ${r.priceRange}</span>
+                        </div>
+                        <p class="description">${r.description}</p>
+                        <div class="card-actions">
+                            <a href="restaurante.html?id=${r.id}" class="btn-secondary">Ver Detalles</a>
+                            <a href="restaurante.html?id=${r.id}&reserve=true" class="btn-reserve">Reservar</a>
+                        </div>
+                    </div>
+                `;
+                restaurantsContainer.appendChild(card);
+            });
+        }
+
+        function filterRestaurants() {
+            const restaurants = getRestaurants();
+            const term = searchInput.value.toLowerCase();
+            const cuisine = cuisineFilter.value;
+            const price = priceFilter.value;
+            const zone = zoneFilter.value;
+
+            const filtered = restaurants.filter(r => {
+                const matchSearch = r.name.toLowerCase().includes(term) || r.description.toLowerCase().includes(term);
+                const matchCuisine = cuisine === 'all' || r.cuisineType === cuisine;
+                const matchPrice = price === 'all' || r.priceRange === price;
+                const matchZone = zone === 'all' || r.zone === zone;
+                return matchSearch && matchCuisine && matchPrice && matchZone;
+            });
+
+            renderRestaurants(filtered);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Read query params
+            const params = new URLSearchParams(window.location.search);
+            const pCuisine = params.get('cuisine');
+            const pZone = params.get('zone');
+
+            if(pCuisine) cuisineFilter.value = pCuisine;
+            if(pZone) zoneFilter.value = pZone;
+
+            renderRestaurants(getRestaurants());
+            filterRestaurants(); // Apply filters immediately based on query
+
+            searchInput.addEventListener('input', filterRestaurants);
+            cuisineFilter.addEventListener('change', filterRestaurants);
+            priceFilter.addEventListener('change', filterRestaurants);
+            zoneFilter.addEventListener('change', filterRestaurants);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Restaurante | Reservas Granada</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body { padding-top: 80px; }
+        header { background: var(--bg-panel); box-shadow: var(--shadow-light); }
+        .logo, .nav-links a { color: var(--text-main); }
+        .logo i { color: var(--primary-color); }
+
+        .detail-hero {
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            margin-bottom: 3rem;
+        }
+        .detail-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(43,58,50,0.9), transparent);
+            display: flex;
+            align-items: flex-end;
+            padding: 3rem 2rem;
+            color: white;
+        }
+        .detail-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+        }
+        @media (max-width: 900px) {
+            .detail-container { grid-template-columns: 1fr; }
+        }
+        .info-section {
+            background: var(--bg-panel);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-light);
+            margin-bottom: 2rem;
+        }
+        .info-section h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+        .amenities-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            list-style: none;
+        }
+        .amenities-list li {
+            background: var(--bg-light);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+        .map-placeholder {
+            height: 250px;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        /* Reservation Widget */
+        .reservation-widget {
+            background: var(--bg-panel);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-heavy);
+            position: sticky;
+            top: 100px;
+            border-top: 4px solid var(--primary-color);
+        }
+        .reservation-widget h3 {
+            text-align: center;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header id="main-header" class="scrolled">
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <i class="fa-solid fa-bell-concierge"></i> Reservas<span>Granada</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="restaurantes.html">Restaurantes</a></li>
+                <li><a href="mis-reservas.html">Mis Reservas</a></li>
+                <li><a href="admin.html">Admin</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="detailHero" class="detail-hero">
+        <div class="detail-hero-overlay">
+            <div class="container" style="padding: 0; width: 100%;">
+                <h1 id="restName" style="font-size: 3rem; margin-bottom: 0.5rem;">Cargando...</h1>
+                <p id="restMeta" style="font-size: 1.2rem; opacity: 0.9;"><i class="fa-solid fa-location-dot"></i> ...</p>
+            </div>
+        </div>
+    </div>
+
+    <main class="container" style="padding-top: 0;">
+        <div class="detail-container">
+            <!-- Left Column: Details -->
+            <div class="main-details">
+                <div class="info-section">
+                    <h3>Acerca del restaurante</h3>
+                    <p id="restDesc" style="color: var(--text-muted); line-height: 1.8;">...</p>
+                </div>
+
+                <div class="info-section">
+                    <h3>Servicios y Características</h3>
+                    <ul class="amenities-list" id="restAmenities">
+                        <!-- Loaded via JS -->
+                    </ul>
+                </div>
+
+                <div class="info-section">
+                    <h3>Platos Destacados</h3>
+                    <ul class="amenities-list" id="restHighlights">
+                        <!-- Loaded via JS -->
+                    </ul>
+                </div>
+
+                <div class="info-section">
+                    <h3>Ubicación</h3>
+                    <p id="restAddress"><i class="fa-solid fa-map-pin"></i> ...</p>
+                    <div class="map-placeholder">
+                        <p><i class="fa-solid fa-map"></i> Área para mapa interactivo (Google Maps / OpenStreetMap)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Reservation Widget -->
+            <aside>
+                <div class="reservation-widget" id="reservationSection">
+                    <h3>Reservar Mesa</h3>
+                    <form id="reservationForm">
+                        <div class="form-group">
+                            <label for="resDate"><i class="fa-regular fa-calendar"></i> Fecha</label>
+                            <input type="date" id="resDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="resTime"><i class="fa-regular fa-clock"></i> Hora</label>
+                            <input type="time" id="resTime" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="resGuests"><i class="fa-solid fa-users"></i> Personas</label>
+                            <input type="number" id="resGuests" min="1" max="20" value="2" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="resName"><i class="fa-regular fa-user"></i> Nombre Completo</label>
+                            <input type="text" id="resName" required placeholder="Ej. Juan Pérez">
+                        </div>
+                        <div class="form-group">
+                            <label for="resEmail"><i class="fa-regular fa-envelope"></i> Correo Electrónico</label>
+                            <input type="email" id="resEmail" required placeholder="tu@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="resPhone"><i class="fa-solid fa-phone"></i> Teléfono</label>
+                            <input type="tel" id="resPhone" required placeholder="+505 8888 8888">
+                        </div>
+                        <div class="form-group">
+                            <label for="resNotes"><i class="fa-regular fa-comment"></i> Peticiones Especiales</label>
+                            <textarea id="resNotes" placeholder="Alergias, celebraciones, silla de bebé..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">Confirmar Reserva</button>
+                    </form>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Modal Success -->
+    <div id="successModal" class="modal">
+        <div class="modal-content" style="text-align: center;">
+            <i class="fa-solid fa-circle-check" style="font-size: 4rem; color: #4ade80; margin-bottom: 1rem;"></i>
+            <h2 style="color: var(--secondary-color); margin-bottom: 1rem;">¡Reserva Confirmada!</h2>
+            <p style="margin-bottom: 1rem; color: var(--text-muted);">Tu código de reserva es:</p>
+            <h3 id="resCodeDisplay" style="font-size: 2rem; color: var(--primary-color); letter-spacing: 2px; margin-bottom: 2rem;">XXX-XXX</h3>
+            <p style="margin-bottom: 2rem; font-size: 0.9rem; color: var(--text-muted);">Hemos enviado los detalles a tu correo electrónico. Puedes consultar tu reserva en la sección "Mis Reservas".</p>
+            <a href="index.html" class="btn-primary">Volver al Inicio</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container" style="padding: 0;">
+            <h3>ReservasGranada</h3>
+            <p>&copy; 2024 Reservas Granada, Nicaragua.</p>
+        </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/reservations.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            const shouldReserve = params.get('reserve');
+
+            const restaurants = getRestaurants();
+            const restaurant = restaurants.find(r => r.id === id);
+
+            if (!restaurant) {
+                document.querySelector('.detail-container').innerHTML = '<h2>Restaurante no encontrado.</h2>';
+                return;
+            }
+
+            // Populate data
+            document.title = `${restaurant.name} | Reservas Granada`;
+            document.getElementById('detailHero').style.backgroundImage = `url('${restaurant.images[0]}')`;
+            document.getElementById('restName').textContent = restaurant.name;
+            document.getElementById('restMeta').innerHTML = `<i class="fa-solid fa-location-dot"></i> ${restaurant.zone} • <i class="fa-solid fa-star"></i> ${restaurant.rating} • <i class="fa-solid fa-money-bill"></i> ${restaurant.priceRange} • <i class="fa-regular fa-clock"></i> ${restaurant.openingHours}`;
+            document.getElementById('restDesc').textContent = restaurant.description;
+            document.getElementById('restAddress').innerHTML = `<i class="fa-solid fa-map-pin"></i> ${restaurant.address}`;
+
+            const amenitiesList = document.getElementById('restAmenities');
+            restaurant.amenities.forEach(am => {
+                const li = document.createElement('li');
+                li.innerHTML = `<i class="fa-solid fa-check" style="color: var(--primary-color)"></i> ${am}`;
+                amenitiesList.appendChild(li);
+            });
+
+            const highlightsList = document.getElementById('restHighlights');
+            restaurant.highlights.forEach(hl => {
+                const li = document.createElement('li');
+                li.innerHTML = `<i class="fa-solid fa-utensils" style="color: var(--accent-color)"></i> ${hl}`;
+                highlightsList.appendChild(li);
+            });
+
+            // Set Min Date for reservation
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('resDate').setAttribute('min', today);
+
+            // Scroll to reservation if requested
+            if(shouldReserve === 'true') {
+                setTimeout(() => {
+                    document.getElementById('reservationSection').scrollIntoView({behavior: 'smooth', block: 'start'});
+                }, 500);
+            }
+
+            // Store current restaurant id for the form
+            window.currentRestaurantId = restaurant.id;
+        });
+    </script>
+</body>
+</html>
