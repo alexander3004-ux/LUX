@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración | Reservas Granada</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body { background-color: #f1f5f9; padding-top: 80px; }
+        header { background: var(--secondary-color); box-shadow: var(--shadow-light); }
+        .logo { color: var(--bg-light); }
+        .nav-links a { color: var(--bg-light); opacity: 0.8;}
+        .nav-links a:hover, .nav-links a.active { color: white; opacity: 1; }
+        .nav-links a::after { background: white; }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+            min-height: calc(100vh - 80px);
+        }
+        @media (max-width: 900px) {
+            .dashboard-container { grid-template-columns: 1fr; }
+        }
+
+        .sidebar {
+            background: white;
+            padding: 2rem 1rem;
+            border-right: 1px solid var(--border-color);
+        }
+        .sidebar-menu {
+            list-style: none;
+        }
+        .sidebar-menu li { margin-bottom: 0.5rem; }
+        .sidebar-menu a {
+            display: block;
+            padding: 1rem;
+            text-decoration: none;
+            color: var(--text-main);
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: #f8fafc;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .main-content { padding: 2rem; }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow-light);
+            text-align: center;
+        }
+        .stat-card h3 { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem; }
+        .stat-card p { font-size: 2rem; font-weight: 700; color: var(--secondary-color); }
+
+        /* Tables */
+        .admin-panel {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow-light);
+        }
+        .admin-panel h2 { margin-bottom: 1.5rem; color: var(--secondary-color); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        th { background: #f8fafc; color: var(--text-muted); font-weight: 600; }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        .status-Confirmada { background: #dcfce7; color: #166534; }
+        .status-Cancelada { background: #fee2e2; color: #991b1b; }
+        .status-Pendiente { background: #fef9c3; color: #854d0e; }
+
+        /* Login Screen */
+        #loginScreen {
+            position: fixed; inset: 0; background: var(--bg-light);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 2000;
+        }
+        .login-box {
+            background: white; padding: 3rem; border-radius: 12px;
+            box-shadow: var(--shadow-heavy); width: 100%; max-width: 400px;
+            text-align: center;
+        }
+        .login-box h2 { margin-bottom: 2rem; color: var(--secondary-color); }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen">
+        <div class="login-box">
+            <h2><i class="fa-solid fa-lock" style="color: var(--primary-color)"></i> Acceso Admin</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <input type="password" id="adminPassword" placeholder="Contraseña (demo: admin123)" required>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;">Entrar</button>
+            </form>
+            <p id="loginError" style="color: red; margin-top: 1rem; display: none;">Contraseña incorrecta</p>
+        </div>
+    </div>
+
+    <header id="main-header" class="scrolled">
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <i class="fa-solid fa-bell-concierge"></i> Reservas<span>Granada</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Volver a la Web</a></li>
+                <li><a href="#" id="logoutBtn">Cerrar Sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active" onclick="showPanel('dashboard')"><i class="fa-solid fa-chart-pie"></i> Dashboard</a></li>
+                <li><a href="#" onclick="showPanel('reservations')"><i class="fa-regular fa-calendar-check"></i> Reservas</a></li>
+                <li><a href="#" onclick="showPanel('restaurants')"><i class="fa-solid fa-store"></i> Restaurantes</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <!-- Dashboard Panel -->
+            <div id="panel-dashboard" class="admin-panel" style="display: block; background: transparent; box-shadow: none; padding: 0;">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total Reservas</h3>
+                        <p id="statTotalReservations">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Restaurantes Activos</h3>
+                        <p id="statActiveRestaurants">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Reservas Hoy</h3>
+                        <p id="statTodayReservations">0</p>
+                    </div>
+                </div>
+
+                <div class="admin-panel">
+                    <h2>Últimas Reservas</h2>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Cliente</th>
+                                    <th>Restaurante</th>
+                                    <th>Fecha</th>
+                                    <th>Personas</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentReservationsTable">
+                                <!-- JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reservations Panel -->
+            <div id="panel-reservations" class="admin-panel" style="display: none;">
+                <h2>Todas las Reservas</h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Cliente</th>
+                                <th>Restaurante</th>
+                                <th>Fecha/Hora</th>
+                                <th>Personas</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allReservationsTable">
+                            <!-- JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Restaurants Panel -->
+            <div id="panel-restaurants" class="admin-panel" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2 style="margin: 0;">Restaurantes</h2>
+                    <button class="btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">+ Nuevo Restaurante</button>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Zona</th>
+                                <th>Tipo</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allRestaurantsTable">
+                            <!-- JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/admin.js"></script>
+    <!-- Restaurant Form Modal -->
+    <div id="restaurantModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeRestaurantModal()">&times;</span>
+            <div class="modal-header">
+                <h2 id="restaurantModalTitle">Nuevo Restaurante</h2>
+            </div>
+            <form id="restaurantForm">
+                <input type="hidden" id="editRestId">
+                <div class="form-group">
+                    <label>Nombre del Restaurante</label>
+                    <input type="text" id="restFormName" required>
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="restFormDesc" required></textarea>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Tipo de Cocina</label>
+                        <select id="restFormCuisine" required>
+                            <option value="Nicaragüense">Nicaragüense</option>
+                            <option value="Internacional">Internacional</option>
+                            <option value="Mariscos">Mariscos</option>
+                            <option value="Parrilla">Parrilla</option>
+                            <option value="Café">Café</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>Zona</label>
+                        <select id="restFormZone" required>
+                            <option value="Centro histórico">Centro histórico</option>
+                            <option value="Calle La Calzada">Calle La Calzada</option>
+                            <option value="Cerca del Parque Central">Cerca del Parque Central</option>
+                            <option value="Malecón">Malecón</option>
+                            <option value="Isletas">Isletas</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Estado</label>
+                    <select id="restFormActive">
+                        <option value="true">Activo</option>
+                        <option value="false">Inactivo</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;">Guardar Restaurante</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
