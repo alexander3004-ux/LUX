@@ -159,6 +159,67 @@ const seedRestaurants = [
         highlights: ["Indio Viejo", "Nacatamales (Fines de semana)"],
         createdAt: new Date().toISOString()
     }
+,
+    {
+        "id": "9",
+        "name": "Boca Baco",
+        "slug": "boca-baco",
+        "description": "Boca Baco es un restaurante local que busca llevar a sus clientes en una experiencia culinaria a través de los variados sabores que ofrece. Ofrece una experiencia culinaria única que combina la rica tradición española con influencias de la cocina mediterránea y japonesa.",
+        "cuisineType": "Fusión / Sushi",
+        "priceRange": "Medio",
+        "address": "Granada, Nicaragua",
+        "zone": "Centro histórico",
+        "phone": "+505 8000 0009",
+        "email": "info@bocabaconicaragua.com",
+        "openingHours": "12:00 PM - 10:00 PM",
+        "capacity": 60,
+        "rating": 4.8,
+        "isActive": true,
+        "amenities": [
+            "Aire acondicionado",
+            "Música en vivo",
+            "Sushi Bar",
+            "WiFi"
+        ],
+        "images": [
+            "https://images.unsplash.com/photo-1553621042-f6e147245754?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+        ],
+        "highlights": [
+            "Sushi Roll Especial",
+            "Cortes Mediterráneos"
+        ],
+        createdAt: new Date().toISOString()
+    },
+    {
+        "id": "10",
+        "name": "NM Culinary Granada",
+        "slug": "nm-culinary-granada",
+        "description": "Experiencia 'Farm to table' en el centro histórico de Granada. También servimos vino, cócteles artesanales y café de especialidad.",
+        "cuisineType": "Farm to Table",
+        "priceRange": "Premium",
+        "address": "Calle Guzmán No.509. Granada, Nicaragua",
+        "zone": "Centro histórico",
+        "phone": "+505 8000 0010",
+        "email": "hola@nmculinarygranada.com",
+        "openingHours": "12:00 PM - 9:00 PM (Miércoles a Domingo)",
+        "capacity": 40,
+        "rating": 4.9,
+        "isActive": true,
+        "amenities": [
+            "Cócteles Artesanales",
+            "Vino",
+            "Café de Especialidad",
+            "Romántico"
+        ],
+        "images": [
+            "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+        ],
+        "highlights": [
+            "Menú de Temporada",
+            "Ingredientes Locales"
+        ],
+        createdAt: new Date().toISOString()
+    }
 ];
 
 function initializeStorage() {
