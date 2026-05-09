@@ -51,11 +51,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // Save to localStorage
         saveReservation(newReservation);
 
+        // Send via WhatsApp
+        const phoneNumber = "+50576112663";
+        const message = `¡Hola! Tengo una nueva reserva en Reservas Granada.\n\n` +
+                        `*Detalles de la Reserva:*\n` +
+                        `- Código: ${code}\n` +
+                        `- Restaurante: ${restaurant.name}\n` +
+                        `- Fecha: ${date}\n` +
+                        `- Hora: ${time}\n` +
+                        `- Personas: ${guests}\n\n` +
+                        `*Datos del Cliente:*\n` +
+                        `- Nombre: ${name}\n` +
+                        `- Teléfono: ${phone}\n` +
+                        `- Email: ${email}\n` +
+                        (notes ? `- Notas: ${notes}` : '');
+
+        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
         // Show Success Modal
         const successModal = document.getElementById('successModal');
         const codeDisplay = document.getElementById('resCodeDisplay');
         codeDisplay.textContent = code;
         successModal.classList.add('show');
+
+        // Redirect to WhatsApp directly
+        window.location.href = whatsappUrl;
     });
 });
 
