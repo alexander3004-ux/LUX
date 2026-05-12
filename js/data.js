@@ -223,9 +223,33 @@ const seedRestaurants = [
 ];
 
 function initializeStorage() {
-    if (!localStorage.getItem('restaurants')) {
+    let currentRestaurants = JSON.parse(localStorage.getItem('restaurants'));
+
+    // If there's no data, or if the user is missing the newly added restaurants, sync them.
+    if (!currentRestaurants) {
         localStorage.setItem('restaurants', JSON.stringify(seedRestaurants));
+    } else {
+        // Find restaurants from seed that aren't in localStorage yet
+        let addedNew = false;
+        seedRestaurants.forEach(seedRest => {
+            const exists = currentRestaurants.find(r => r.id === seedRest.id);
+            if (!exists) {
+                currentRestaurants.push(seedRest);
+                addedNew = true;
+            } else {
+                // Update images for existing ones to ensure they get the real photos
+                if (JSON.stringify(exists.images) !== JSON.stringify(seedRest.images)) {
+                    exists.images = seedRest.images;
+                    addedNew = true;
+                }
+            }
+        });
+
+        if (addedNew) {
+            localStorage.setItem('restaurants', JSON.stringify(currentRestaurants));
+        }
     }
+
     if (!localStorage.getItem('reservations')) {
         localStorage.setItem('reservations', JSON.stringify([]));
     }
