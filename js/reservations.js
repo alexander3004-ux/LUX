@@ -74,8 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
         codeDisplay.textContent = code;
         successModal.classList.add('show');
 
-        // Redirect to WhatsApp directly
-        window.location.href = whatsappUrl;
+        // Open WhatsApp in a new tab instead of redirecting directly
+        window.open(whatsappUrl, '_blank');
     });
 });
 
