@@ -182,7 +182,7 @@ const seedRestaurants = [
             "WiFi"
         ],
         "images": [
-            "https://images.unsplash.com/photo-1553621042-f6e147245754?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            "https://bocabaconicaragua.com/wp-content/uploads/2024/05/slider2.jpg"
         ],
         "highlights": [
             "Sushi Roll Especial",
@@ -212,7 +212,7 @@ const seedRestaurants = [
             "Romántico"
         ],
         "images": [
-            "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            "https://images.squarespace-cdn.com/content/v1/63122281bfbb6364add7151f/1dc1c9d1-4827-4b1f-9833-3fccb120c23d/IMG_9370+%281%29.jpg"
         ],
         "highlights": [
             "Menú de Temporada",
