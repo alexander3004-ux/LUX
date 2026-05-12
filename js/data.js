@@ -182,7 +182,7 @@ const seedRestaurants = [
             "WiFi"
         ],
         "images": [
-            "https://images.unsplash.com/photo-1553621042-f6e147245754?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            "https://bocabaconicaragua.com/wp-content/uploads/2024/05/slider2.jpg"
         ],
         "highlights": [
             "Sushi Roll Especial",
@@ -212,7 +212,7 @@ const seedRestaurants = [
             "Romántico"
         ],
         "images": [
-            "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            "https://images.squarespace-cdn.com/content/v1/63122281bfbb6364add7151f/1dc1c9d1-4827-4b1f-9833-3fccb120c23d/IMG_9370+%281%29.jpg"
         ],
         "highlights": [
             "Menú de Temporada",
@@ -223,9 +223,33 @@ const seedRestaurants = [
 ];
 
 function initializeStorage() {
-    if (!localStorage.getItem('restaurants')) {
+    let currentRestaurants = JSON.parse(localStorage.getItem('restaurants'));
+
+    // If there's no data, or if the user is missing the newly added restaurants, sync them.
+    if (!currentRestaurants) {
         localStorage.setItem('restaurants', JSON.stringify(seedRestaurants));
+    } else {
+        // Find restaurants from seed that aren't in localStorage yet
+        let addedNew = false;
+        seedRestaurants.forEach(seedRest => {
+            const exists = currentRestaurants.find(r => r.id === seedRest.id);
+            if (!exists) {
+                currentRestaurants.push(seedRest);
+                addedNew = true;
+            } else {
+                // Update images for existing ones to ensure they get the real photos
+                if (JSON.stringify(exists.images) !== JSON.stringify(seedRest.images)) {
+                    exists.images = seedRest.images;
+                    addedNew = true;
+                }
+            }
+        });
+
+        if (addedNew) {
+            localStorage.setItem('restaurants', JSON.stringify(currentRestaurants));
+        }
     }
+
     if (!localStorage.getItem('reservations')) {
         localStorage.setItem('reservations', JSON.stringify([]));
     }
