@@ -14,21 +14,102 @@
         .logo, .nav-links a { color: var(--text-main); }
         .logo i { color: var(--primary-color); }
 
-        .detail-hero {
-            height: 400px;
-            background-size: cover;
-            background-position: center;
+        /* Gallery Styles */
+        .gallery-container {
             position: relative;
+            height: 500px;
             margin-bottom: 3rem;
-        }
-        .detail-hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(43,58,50,0.9), transparent);
             display: flex;
-            align-items: flex-end;
-            padding: 3rem 2rem;
-            color: white;
+            gap: 10px;
+            overflow: hidden;
+            background: var(--bg-panel);
+            padding: 10px;
+            box-shadow: var(--shadow-light);
+        }
+
+        .gallery-main {
+            flex: 2;
+            height: 100%;
+            position: relative;
+            border-radius: 12px 0 0 12px;
+            overflow: hidden;
+        }
+        .gallery-main img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .gallery-main:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-thumbnails {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            height: 100%;
+        }
+
+        .gallery-thumb {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        .gallery-thumb:first-child {
+            border-radius: 0 12px 0 0;
+        }
+        .gallery-thumb:last-child {
+            border-radius: 0 0 12px 0;
+        }
+        .gallery-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+        .gallery-thumb img:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Text Container Below Gallery */
+        .restaurant-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+        }
+        .restaurant-header h1 {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+        .restaurant-header p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .gallery-container {
+                height: 350px;
+                flex-direction: column;
+            }
+            .gallery-main {
+                border-radius: 12px 12px 0 0;
+            }
+            .gallery-thumbnails {
+                flex-direction: row;
+            }
+            .gallery-thumb:first-child {
+                border-radius: 0 0 0 12px;
+            }
+            .gallery-thumb:last-child {
+                border-radius: 0 0 12px 0;
+            }
+            .restaurant-header h1 {
+                font-size: 2rem;
+            }
         }
         .detail-container {
             display: grid;
@@ -107,12 +188,19 @@
         </nav>
     </header>
 
-    <div id="detailHero" class="detail-hero">
-        <div class="detail-hero-overlay">
-            <div class="container" style="padding: 0; width: 100%;">
-                <h1 id="restName" style="font-size: 3rem; margin-bottom: 0.5rem;">Cargando...</h1>
-                <p id="restMeta" style="font-size: 1.2rem; opacity: 0.9;"><i class="fa-solid fa-location-dot"></i> ...</p>
+    <div class="container" style="padding-top: 1rem;">
+        <div class="gallery-container" id="restaurantGallery">
+            <div class="gallery-main">
+                <img id="mainGalleryImage" src="" alt="Main Image">
             </div>
+            <div class="gallery-thumbnails" id="galleryThumbnails">
+                <!-- Thumbnails loaded via JS -->
+            </div>
+        </div>
+
+        <div class="restaurant-header">
+            <h1 id="restName">Cargando...</h1>
+            <p id="restMeta"><i class="fa-solid fa-location-dot"></i> ...</p>
         </div>
     </div>
 
@@ -225,7 +313,40 @@
 
             // Populate data
             document.title = `${restaurant.name} | Reservas Granada`;
-            document.getElementById('detailHero').style.backgroundImage = `url('${restaurant.images[0]}')`;
+
+            // Setup Gallery
+            const mainImg = document.getElementById('mainGalleryImage');
+            const thumbContainer = document.getElementById('galleryThumbnails');
+
+            if (restaurant.images && restaurant.images.length > 0) {
+                mainImg.src = restaurant.images[0];
+
+                // If more than 1 image, create thumbnails
+                if (restaurant.images.length > 1) {
+                    for (let i = 0; i < restaurant.images.length; i++) {
+                        const thumbDiv = document.createElement('div');
+                        thumbDiv.className = 'gallery-thumb';
+
+                        const img = document.createElement('img');
+                        img.src = restaurant.images[i];
+                        img.alt = `Thumbnail ${i}`;
+
+                        // Click to swap main image
+                        img.addEventListener('click', () => {
+                            const currentMainSrc = mainImg.src;
+                            mainImg.src = img.src;
+                            img.src = currentMainSrc;
+                        });
+
+                        thumbDiv.appendChild(img);
+                        thumbContainer.appendChild(thumbDiv);
+                    }
+                } else {
+                    // Hide thumbnails container if only 1 image
+                    thumbContainer.style.display = 'none';
+                }
+            }
+
             document.getElementById('restName').textContent = restaurant.name;
             document.getElementById('restMeta').innerHTML = `<i class="fa-solid fa-location-dot"></i> ${restaurant.zone} • <i class="fa-solid fa-star"></i> ${restaurant.rating} • <i class="fa-solid fa-money-bill"></i> ${restaurant.priceRange} • <i class="fa-regular fa-clock"></i> ${restaurant.openingHours}`;
             document.getElementById('restDesc').textContent = restaurant.description;

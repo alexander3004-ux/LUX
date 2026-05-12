@@ -1,253 +1,136 @@
 const seedRestaurants = [
     {
         id: "1",
-        name: "Restaurante El Patio Granadino",
-        slug: "restaurante-el-patio-granadino",
-        description: "Auténtica cocina nicaragüense en un patio colonial lleno de historia y encanto.",
-        cuisineType: "Nicaragüense",
+        name: "The Garden Cafe",
+        slug: "the-garden-cafe",
+        description: "The Garden Café is a beautiful colonial home turned restaurant. We serve fresh, healthy, and delicious food with a focus on local ingredients and sustainable practices.",
+        cuisineType: "Internacional / Saludable",
         priceRange: "Medio",
-        address: "Calle Atravesada, Granada, Nicaragua",
+        address: "Calle Libertad, Granada, Nicaragua",
         zone: "Centro histórico",
-        phone: "+505 8000 0001",
-        email: "contacto@elpatiogranadino.ni",
-        openingHours: "11:00 AM - 10:00 PM",
-        capacity: 60,
+        phone: "+505 2552 8582",
+        email: "info@gardencafegranada.com",
+        openingHours: "7:00 AM - 9:00 PM",
+        capacity: 80,
         rating: 4.8,
         isActive: true,
-        amenities: ["Terraza", "Música en vivo", "Familiar", "WiFi"],
-        images: ["https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"],
-        highlights: ["Vigorón Gourmet", "Churrasco al estilo Nica"],
+        amenities: ["Patio Colonial", "Tienda de Artesanías", "WiFi", "Vegetariano / Vegano", "Pet friendly"],
+        images: [
+            "https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1493770348161-369560ae357d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+        ],
+        highlights: ["Desayuno Nica Saludable", "Ensalada Garden", "Smoothies Frescos"],
         createdAt: new Date().toISOString()
     },
     {
         id: "2",
-        name: "Terraza La Calzada",
-        slug: "terraza-la-calzada",
-        description: "El mejor ambiente nocturno en la famosa Calle La Calzada, con una fusión de comida internacional.",
-        cuisineType: "Internacional",
-        priceRange: "Medio",
-        address: "Calle La Calzada, Granada, Nicaragua",
-        zone: "Calle La Calzada",
-        phone: "+505 8000 0002",
-        email: "reservas@terrazalacalzada.ni",
-        openingHours: "4:00 PM - 1:00 AM",
-        capacity: 80,
-        rating: 4.6,
+        name: "NM Culinary Granada",
+        slug: "nm-culinary-granada",
+        description: "Experiencia 'Farm to table' en el centro histórico de Granada. También servimos vino, cócteles artesanales y café de especialidad.",
+        cuisineType: "Farm to Table",
+        priceRange: "Premium",
+        address: "Calle Guzmán No.509. Granada, Nicaragua",
+        zone: "Centro histórico",
+        phone: "+505 8000 0010",
+        email: "hola@nmculinarygranada.com",
+        openingHours: "12:00 PM - 9:00 PM (Miércoles a Domingo)",
+        capacity: 40,
+        rating: 4.9,
         isActive: true,
-        amenities: ["Terraza", "Aire acondicionado", "Música en vivo", "WiFi"],
-        images: ["https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"],
-        highlights: ["Ceviche Tropical", "Cócteles de Autor"],
+        amenities: ["Cócteles Artesanales", "Vino", "Café de Especialidad", "Romántico"],
+        images: [
+            "https://images.squarespace-cdn.com/content/v1/63122281bfbb6364add7151f/1dc1c9d1-4827-4b1f-9833-3fccb120c23d/IMG_9370+%281%29.jpg",
+            "https://images.unsplash.com/photo-1544025162-81111421550a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1559339352-11d035aa65de?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+        ],
+        highlights: ["Menú de Temporada", "Ingredientes Locales", "Pesca del Día"],
         createdAt: new Date().toISOString()
     },
     {
         id: "3",
-        name: "Sabores del Lago",
-        slug: "sabores-del-lago",
-        description: "Especialistas en mariscos frescos con una vista inigualable al Lago Cocibolca.",
-        cuisineType: "Mariscos",
+        name: "Restaurante El Zaguán",
+        slug: "el-zaguan",
+        description: "El mejor asado tradicional en Granada. Disfruta de nuestras carnes a la parrilla, un ambiente folklórico y un sabor que nos distingue por décadas.",
+        cuisineType: "Parrilla / Nicaragüense",
         priceRange: "Premium",
-        address: "Centro Turístico de Granada",
-        zone: "Malecón",
-        phone: "+505 8000 0003",
-        email: "hola@saboresdellago.ni",
-        openingHours: "12:00 PM - 9:00 PM",
+        address: "Avenida 14 de Septiembre, detrás de la Catedral, Granada",
+        zone: "Cerca de Catedral",
+        phone: "+505 2552 2522",
+        email: "reservas@elzaguan.com",
+        openingHours: "12:00 PM - 10:00 PM",
         capacity: 100,
-        rating: 4.9,
+        rating: 4.7,
         isActive: true,
-        amenities: ["Vista al lago", "Terraza", "Parqueo", "Familiar", "Pet friendly"],
-        images: ["https://images.unsplash.com/photo-1572162522099-7a0c28d7691b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"],
-        highlights: ["Pescado a la Tipitapa", "Langosta al Ajillo"],
+        amenities: ["Música en Vivo", "Parrilla Abierta", "Aire Acondicionado", "Ideal para Grupos"],
+        images: [
+            "https://images.unsplash.com/photo-1544148103-0773bf10d330?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1558030006-450675393462?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+        ],
+        highlights: ["Churrasco Tradicional", "Gallo Pinto", "Ceviche"],
         createdAt: new Date().toISOString()
     },
     {
         id: "4",
-        name: "Café Colonial Granada",
-        slug: "cafe-colonial-granada",
-        description: "Un espacio acogedor para disfrutar del mejor café nicaragüense y repostería artesanal.",
-        cuisineType: "Café",
-        priceRange: "Económico",
-        address: "Costado Oeste del Parque Central",
-        zone: "Cerca del Parque Central",
-        phone: "+505 8000 0004",
-        email: "info@cafecolonial.ni",
-        openingHours: "7:00 AM - 7:00 PM",
-        capacity: 40,
-        rating: 4.7,
+        name: "Pita Pita",
+        slug: "pita-pita",
+        description: "La mejor comida del Medio Oriente y Mediterránea en Granada. Pizzas en horno de leña, shawarmas, falafel y un ambiente acogedor.",
+        cuisineType: "Mediterránea / Medio Oriente",
+        priceRange: "Medio",
+        address: "Calle La Libertad, Granada, Nicaragua",
+        zone: "Centro histórico",
+        phone: "+505 2552 8272",
+        email: "hola@pitapitagranada.com",
+        openingHours: "11:30 AM - 10:00 PM",
+        capacity: 60,
+        rating: 4.8,
         isActive: true,
-        amenities: ["Aire acondicionado", "WiFi", "Familiar"],
-        images: ["https://images.unsplash.com/photo-1553621042-f6e147245754?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"],
-        highlights: ["Café de Especialidad", "Tostadas Francesas"],
+        amenities: ["Horno de Leña", "Opciones Veganas", "Mesas al Aire Libre", "WiFi"],
+        images: [
+            "https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+        ],
+        highlights: ["Shawarma de Pollo", "Pizza al Horno de Leña", "Plato de Hummus y Falafel"],
         createdAt: new Date().toISOString()
     },
     {
         id: "5",
-        name: "Asados Volcán Mombacho",
-        slug: "asados-volcan-mombacho",
-        description: "Cortes de carne premium preparados a la parrilla con leña local en un ambiente rústico.",
-        cuisineType: "Parrilla",
-        priceRange: "Premium",
-        address: "Carretera a Masaya km 40",
-        zone: "Centro histórico",
-        phone: "+505 8000 0005",
-        email: "reservas@asadosmombacho.ni",
-        openingHours: "12:00 PM - 10:00 PM",
-        capacity: 120,
-        rating: 4.8,
-        isActive: true,
-        amenities: ["Parqueo", "Terraza", "Música en vivo", "Familiar"],
-        images: ["https://images.unsplash.com/photo-1544148103-0773bf10d330?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"],
-        highlights: ["Tomahawk Clásico", "Costillas BBQ"],
-        createdAt: new Date().toISOString()
-    },
-    {
-        id: "6",
-        name: "Bistro Parque Central",
-        slug: "bistro-parque-central",
-        description: "Cocina de autor en un ambiente elegante ideal para cenas románticas.",
-        cuisineType: "Internacional",
+        name: "Gaia Forest",
+        slug: "gaia-forest",
+        description: "Conecta con la naturaleza en nuestro bosque tropical dentro de la ciudad. Comida orgánica, fusión y un ambiente relajante único.",
+        cuisineType: "Orgánica / Fusión",
         priceRange: "Medio",
-        address: "Frente al Parque Central",
-        zone: "Cerca del Parque Central",
-        phone: "+505 8000 0006",
-        email: "contacto@bistroparque.ni",
-        openingHours: "5:00 PM - 11:00 PM",
+        address: "Granada, Nicaragua",
+        zone: "Periferia",
+        phone: "+505 8123 4567",
+        email: "contact@gaiaforest.com",
+        openingHours: "8:00 AM - 8:00 PM",
         capacity: 50,
-        rating: 4.5,
-        isActive: true,
-        amenities: ["Aire acondicionado", "Romántico", "WiFi"],
-        images: ["https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"],
-        highlights: ["Risotto de Hongos", "Carpaccio de Res"],
-        createdAt: new Date().toISOString()
-    },
-    {
-        id: "7",
-        name: "Mariscos Las Isletas",
-        slug: "mariscos-las-isletas",
-        description: "Una experiencia gastronómica única navegando por las Isletas de Granada.",
-        cuisineType: "Mariscos",
-        priceRange: "Premium",
-        address: "Puerto Asese, Granada",
-        zone: "Isletas",
-        phone: "+505 8000 0007",
-        email: "tour@mariscoslasisletas.ni",
-        openingHours: "10:00 AM - 6:00 PM",
-        capacity: 30,
         rating: 4.9,
         isActive: true,
-        amenities: ["Vista al lago", "Familiar", "Romántico"],
-        images: ["https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"],
-        highlights: ["Bandeja de Mariscos", "Pescado Frito"],
-        createdAt: new Date().toISOString()
-    },
-    {
-        id: "8",
-        name: "Cocina Doña Mercedes",
-        slug: "cocina-dona-mercedes",
-        description: "La verdadera esencia de la comida casera nicaragüense, recetas pasadas de generación en generación.",
-        cuisineType: "Nicaragüense",
-        priceRange: "Económico",
-        address: "Barrio Jalteva",
-        zone: "Centro histórico",
-        phone: "+505 8000 0008",
-        email: "donamercedes@cocinanica.ni",
-        openingHours: "7:00 AM - 4:00 PM",
-        capacity: 45,
-        rating: 4.8,
-        isActive: true,
-        amenities: ["Familiar", "Económico"],
-        images: ["https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"],
-        highlights: ["Indio Viejo", "Nacatamales (Fines de semana)"],
-        createdAt: new Date().toISOString()
-    }
-,
-    {
-        "id": "9",
-        "name": "Boca Baco",
-        "slug": "boca-baco",
-        "description": "Boca Baco es un restaurante local que busca llevar a sus clientes en una experiencia culinaria a través de los variados sabores que ofrece. Ofrece una experiencia culinaria única que combina la rica tradición española con influencias de la cocina mediterránea y japonesa.",
-        "cuisineType": "Fusión / Sushi",
-        "priceRange": "Medio",
-        "address": "Granada, Nicaragua",
-        "zone": "Centro histórico",
-        "phone": "+505 8000 0009",
-        "email": "info@bocabaconicaragua.com",
-        "openingHours": "12:00 PM - 10:00 PM",
-        "capacity": 60,
-        "rating": 4.8,
-        "isActive": true,
-        "amenities": [
-            "Aire acondicionado",
-            "Música en vivo",
-            "Sushi Bar",
-            "WiFi"
+        amenities: ["Jardín Botánico", "Opciones Saludables", "Pet friendly", "Eventos Especiales"],
+        images: [
+            "https://images.unsplash.com/photo-1466978913421-bac2e5e4d6c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
         ],
-        "images": [
-            "https://bocabaconicaragua.com/wp-content/uploads/2024/05/slider2.jpg"
-        ],
-        "highlights": [
-            "Sushi Roll Especial",
-            "Cortes Mediterráneos"
-        ],
-        createdAt: new Date().toISOString()
-    },
-    {
-        "id": "10",
-        "name": "NM Culinary Granada",
-        "slug": "nm-culinary-granada",
-        "description": "Experiencia 'Farm to table' en el centro histórico de Granada. También servimos vino, cócteles artesanales y café de especialidad.",
-        "cuisineType": "Farm to Table",
-        "priceRange": "Premium",
-        "address": "Calle Guzmán No.509. Granada, Nicaragua",
-        "zone": "Centro histórico",
-        "phone": "+505 8000 0010",
-        "email": "hola@nmculinarygranada.com",
-        "openingHours": "12:00 PM - 9:00 PM (Miércoles a Domingo)",
-        "capacity": 40,
-        "rating": 4.9,
-        "isActive": true,
-        "amenities": [
-            "Cócteles Artesanales",
-            "Vino",
-            "Café de Especialidad",
-            "Romántico"
-        ],
-        "images": [
-            "https://images.squarespace-cdn.com/content/v1/63122281bfbb6364add7151f/1dc1c9d1-4827-4b1f-9833-3fccb120c23d/IMG_9370+%281%29.jpg"
-        ],
-        "highlights": [
-            "Menú de Temporada",
-            "Ingredientes Locales"
-        ],
+        highlights: ["Bowl de la Tierra", "Kombucha Casera", "Tostadas con Aguacate y Semillas"],
         createdAt: new Date().toISOString()
     }
 ];
 
 function initializeStorage() {
-    let currentRestaurants = JSON.parse(localStorage.getItem('restaurants'));
-
-    // If there's no data, or if the user is missing the newly added restaurants, sync them.
-    if (!currentRestaurants) {
+    const currentData = JSON.parse(localStorage.getItem('restaurants'));
+    // Check if restaurants are uninitialized or contain old dummy data
+    // by comparing the length or checking specific legacy properties
+    // For this update, we will assume if the data length is not 5, or if it doesn't have our new seed data signatures, we re-seed.
+    // However, to be safe and preserve potential admin edits, we'll check if the dataVersion flag is set.
+    const dataVersion = localStorage.getItem('dataVersion');
+    if (!currentData || dataVersion !== 'v2') {
         localStorage.setItem('restaurants', JSON.stringify(seedRestaurants));
-    } else {
-        // Find restaurants from seed that aren't in localStorage yet
-        let addedNew = false;
-        seedRestaurants.forEach(seedRest => {
-            const exists = currentRestaurants.find(r => r.id === seedRest.id);
-            if (!exists) {
-                currentRestaurants.push(seedRest);
-                addedNew = true;
-            } else {
-                // Update images for existing ones to ensure they get the real photos
-                if (JSON.stringify(exists.images) !== JSON.stringify(seedRest.images)) {
-                    exists.images = seedRest.images;
-                    addedNew = true;
-                }
-            }
-        });
-
-        if (addedNew) {
-            localStorage.setItem('restaurants', JSON.stringify(currentRestaurants));
-        }
+        localStorage.setItem('dataVersion', 'v2');
     }
 
     if (!localStorage.getItem('reservations')) {
